@@ -132,7 +132,7 @@
         </div>
     </div>
     <div id="latestPosts" class="latest-posts"></div>
-   <script>
+<script>
     function createPost() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -165,7 +165,7 @@
                 if (data !== null) {
                     console.log('Response:', data);
                     // Update the posts container with the new post
-                    updatePostsContainer(data["uid"], message, 0);
+                    updatePostsContainer(uid, message, 0);
                 }
             })
             .catch(error => {
@@ -213,6 +213,7 @@
         const postsContainer = document.getElementById('posts');
         const postDiv = document.createElement('div');
         postDiv.className = 'post-container';
+        postDiv.dataset.uid = uid; // Assigning uid as a dataset attribute
         const postContent = document.createElement('p');
         postContent.className = 'post-content';
         postContent.textContent = `UID: ${uid}, Message: ${message}`;
@@ -222,7 +223,7 @@
         const deleteButton = document.createElement('button'); // Delete button
         deleteButton.textContent = 'Delete'; // Set text content to 'Delete'
         deleteButton.addEventListener('click', () => deletePost(uid, message)); // Attach event listener to delete button
-        const likeButton = document.createElement('button'); // Like button
+        const likeButton = document.createElement('button');
         likeButton.textContent = 'Like';
         likeButton.addEventListener('click', () => {
             likePost(uid, message);
@@ -299,9 +300,10 @@
     function likePost(uid, message) {
         // Increment the like count in the DOM immediately
         const likesCountSpan = document.querySelector(`.post-container[data-uid="${uid}"] .likes-count`);
+        var currentLikes = 0;
         if (likesCountSpan) {
-            const currentLikes = parseInt(likesCountSpan.textContent, 10) || 0;
-            likesCountSpan.textContent = `${currentLikes + 1} :+1:`;
+            currentLikes = parseInt(likesCountSpan.textContent, 10) || 0;
+            likesCountSpan.textContent = `${currentLikes + 1} 👍`;
         }
         // Now, send the request to the server to update likes
         var myHeaders = new Headers();
@@ -337,7 +339,9 @@
             .then(data => {
                 if (data !== null) {
                     console.log('Like Response:', data);
-                    // Update the like count in the DOM if needed
+                    if (likesCountSpan) {
+                        likesCountSpan.textContent = `${currentLikes + 1} 👍`;
+                    }
                 }
             })
             .catch(error => {
@@ -350,7 +354,7 @@
         const allPosts = postsContainer.querySelectorAll('.post-container');
         allPosts.forEach(post => {
             const postContent = post.querySelector('.post-content').textContent.toLowerCase();
-            if (postContent.incsludes(searchInput)) {
+            if (postContent.includes(searchInput)) {
                 post.style.display = 'block';
             } else {
                 post.style.display = 'none';
@@ -395,5 +399,7 @@
             });
     }
 </script>
+
+
 <!-- Add a container for the reply form -->
 <div id="replyFormContainer"></div>
