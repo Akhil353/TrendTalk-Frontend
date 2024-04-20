@@ -1,0 +1,323 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
+
+
+# Make data base, printed on Sat Apr 20 16:24:06 2024
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile (from `Makefile', line 7)
+.SHELLFLAGS = -e 
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# makefile (from `Makefile', line 13)
+NOTEBOOK_FILES := 
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/Akhil/vscode/Bluejay-Frontend
+# makefile (from `Makefile', line 6)
+SHELL = /bin/bash -c
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+INFOPATH = /opt/homebrew/share/info:
+# environment
+VSCODE_CWD = /
+# environment
+PATH = /Users/Akhil/gems/bin:/Users/Akhil/gems/bin:/Users/Akhil/gems/bin:/Users/Akhil/gems/bin:/Users/Akhil/gems/bin:/Users/Akhil/.rbenv/shims:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin
+# makefile (from `Makefile', line 4)
+LOG_FILE = /tmp/jekyll$(PORT).log
+# makefile (from `Makefile', line 3)
+REPO_NAME = teacher_portfolio
+# makefile (from `Makefile', line 16)
+DESTINATION_DIRECTORY = _posts
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# makefile (from `Makefile', line 2)
+PORT = 4100
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.N97epyI5jg/Listeners
+# automatic
+%F = $(notdir $%)
+# makefile (from `Makefile', line 17)
+MARKDOWN_FILES := 
+# environment
+PWD = /Users/Akhil/vscode/Bluejay-Frontend
+# environment
+HOMEBREW_CELLAR = /opt/homebrew/Cellar
+# environment
+GEM_HOME = /Users/Akhil/gems
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+MANPATH = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/share/man:/Library/Developer/CommandLineTools/usr/share/man:/Library/Developer/CommandLineTools/Toolchains/XcodeDefault.xctoolchain/usr/share/man:/opt/homebrew/share/man::
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/Akhil
+# default
+MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /Developer)/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/Akhil/Library/Application Support/Code/CachedData/8b617bd08fd9e3fc94d14adb8d358b56e3f72314
+# environment
+LOGNAME = Akhil
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 1
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = Akhil
+# makefile
+.DEFAULT_GOAL := default
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Library/Developer/CommandLineTools/usr/bin/make
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/xq/tmpxfgn16zdfsj_d1tx7m32r0000gp/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/Akhil/Library/Application Support/Code/1.82-main.sock
+# environment
+MallocNanoZone = 0
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.6918505.6918511
+# environment
+HOMEBREW_PREFIX = /opt/homebrew
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+HOMEBREW_REPOSITORY = /opt/homebrew
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F6:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# environment
+RBENV_SHELL = zsh
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+LANG = C
+# environment
+VSCODE_PID = 870
+# variable set hash-table stats:
+# Load=73/1024=7%, Rehash=0, Collisions=10/104=10%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777230, inode 10257495): 29 files, no impossibilities.
+# _notebooks (device 16777230, inode 10257626): 3 files, no impossibilities.
+
+# 32 files, no impossibilities in 2 directories.
+
+# Implicit Rules
+
+_posts/%_IPYNB_2_.md: _notebooks/%.ipynb
+#  commands to execute (from `Makefile', line 70):
+	@echo "Converting source $< to destination $@"
+	@python3 -c 'import sys; from scripts.convert_notebooks import convert_single_notebook; convert_single_notebook(sys.argv[1])' "$<"
+	
+
+# 1 implicit rules, 0 (0.0%) terminal.
+
+# Files
+
+stop:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 82):
+	@echo "Stopping server..."
+	@# kills process running on port $(PORT)
+	@@lsof -ti :$(PORT) | xargs kill >/dev/null 2>&1 || true
+	@echo "Stopping logging process..."
+	@# kills previously running logging processes
+	@@ps aux | awk -v log_file=$(LOG_FILE) '$$0 ~ "tail -f " log_file { print $$2 }' | xargs kill >/dev/null 2>&1 || true
+	@# removes log
+	@rm -f $(LOG_FILE)
+	
+
+# Not a target:
+all:
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+.PHONY: default server convert clean stop
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2024-02-14 11:52:08
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+server: stop convert
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 58):
+	@echo "Starting server..."
+	@@nohup bundle exec jekyll serve -H 127.0.0.1 -P $(PORT) > $(LOG_FILE) 2>&1 & \
+	PID=$$!; \
+	echo "Server PID: $$PID"
+	@@until [ -f $(LOG_FILE) ]; do sleep 1; done
+	
+
+default: server
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 24):
+	@echo "Terminal logging starting, watching server..."
+	@# tail and awk work together to extract Jekyll regeneration messages
+	@# When a _notebook is detected in the log, call make convert in the background
+	@# Note: We use the "if ($$0 ~ /_notebooks\/.*\.ipynb/) { system(\"make convert &\") }" to call make convert
+	@(tail -f $(LOG_FILE) | awk '/Server address: http:\/\/127.0.0.1:$(PORT)\/$(REPO_NAME)\// { serverReady=1 } \
+	serverReady && /^ *Regenerating:/ { regenerate=1 } \
+	regenerate { \
+	if (/^[[:blank:]]*$$/) { regenerate=0 } \
+	else { \
+	print; \
+	if ($$0 ~ /_notebooks\/.*\.ipynb/) { system("make convert &") } \
+	} \
+	}') 2>/dev/null &
+	@# start an infinite loop with timeout to check log status
+	@for ((COUNTER = 0; ; COUNTER++)); do \
+	if grep -q "Server address:" $(LOG_FILE); then \
+	echo "Server started in $$COUNTER seconds"; \
+	break; \
+	fi; \
+	if [ $$COUNTER -eq 60 ]; then \
+	echo "Server timed out after $$COUNTER seconds."; \
+	echo "Review errors from $(LOG_FILE)."; \
+	cat $(LOG_FILE); \
+	exit 1; \
+	fi; \
+	sleep 1; \
+	done
+	@# outputs startup log, removes last line ($$d) as ctl-c message is not applicable for background process
+	@sed '$$d' $(LOG_FILE)
+	
+
+# Not a target:
+.DEFAULT:
+ 
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean: stop
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 75):
+	@echo "Cleaning converted IPYNB files..."
+	@@rm -f _posts/*_IPYNB_2_.md
+	@rm -rf _site
+	
+
+convert:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=10/1024=1%, Rehash=0, Collisions=0/31=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Sat Apr 20 16:24:06 2024
+
+ 
