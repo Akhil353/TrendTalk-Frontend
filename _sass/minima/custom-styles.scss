@@ -1,6 +1,6 @@
 /*-----------------------------------*/
 /*--- IMPORT STYLES FOR Mortpages ---*/
-@import "minima/Nighthawkpages-styles";   
+// @import "minima/Nighthawkpages-styles";   
 
 /*-----------------------------------*/
 /*--- CUSTOM STYLES FOR Nighthawkpages ---*/
@@ -15,15 +15,15 @@
 /*-----------------------------------*/
 /*----- ADD YOUR STYLES BELOW -------*/
 
-// If you want to turn off dark background for syntax highlighting, comment or delete the below line.
-// If you want to use dark themes uncomment out the following lines
+// // If you want to turn off dark background for syntax highlighting, comment or delete the below line.
+// // If you want to use dark themes uncomment out the following lines
 @import "minima/Nighthawkpages-dracula-highlight"; 
-@import "minima/dark-mode"; // Dracula Highlight recommended for dark mode
-@import "minima/platformer-styles"; 
+//@import "minima/dark-mode"; // Dracula Highlight recommended for dark mode
+//@import "minima/platformer-styles"; 
 @import "minima/teacher-styles"; 
 
-// FOR HAMILTON
-// @import "minima/hamilton/skins/daylight";
-// @import "minima/hamilton/skins/midnight";
-// @import "minima/hamilton/skins/sunrise";
-// @import "minima/hamilton/skins/sunset"
+ // FOR HAMILTON
+/* @import "minima/hamilton/skins/daylight";
+@import "minima/hamilton/skins/midnight";
+@import "minima/hamilton/skins/sunrise";
+@import "minima/hamilton/skins/sunset" */
