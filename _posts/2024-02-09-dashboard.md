@@ -1,21 +1,25 @@
 <html lang="en">
 <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Media Chat</title>
-    <style>
+    <style> /* partially created by chatGPT */
         @keyframes strobe {
-            0%, 20%, 50%, 80%, 100% {
+            0%, 100%{
                 border-color: #FF0000;
             }
-            40% {
+            20% {
                 border-color: #FF7F00;
             }
-            60% {
+            40% {
                 border-color: #FFFF00;
             }
-            80% {
+            60% {
                 border-color: #00FF00;
+            }
+            80% {
+                border-color: #002CFF;
             }
         }
         body {
@@ -25,9 +29,9 @@
             color: #39FF14;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
         }
-        .login-container {
+        .container {
             border-radius: 15px;
             padding: 20px;
             border: 5px solid transparent;
@@ -35,28 +39,58 @@
             background-color: #171515;
             color: #39FF14;
             animation: strobe 2s infinite;
-            width: 300px;
-            margin: auto;
-            margin-bottom: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 20px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .container {
-            display: flex;
-            flex-direction: column-reverse;
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #000;
+            border-radius: 5px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #39FF14;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #2d9e00;
+        }
+        .posts-container {
             max-width: 800px;
-            margin: auto;
+            width: 100%;
             padding: 20px;
             flex: 1;
-        }
-        .input-container,
-        .posts-container {
-            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .post-container {
-            position: relative;
+            width: 100%;
+            max-width: 600px;
             border: 1px solid #ccc;
             margin-bottom: 10px;
             padding: 10px;
-            background-color: #fff;
+            background-color: #000;
+            color: #fff;
+            border-radius: 5px;
+            position: relative;
+            box-sizing: border-box;
         }
         .post-actions {
             position: absolute;
@@ -68,47 +102,23 @@
             cursor: pointer;
             background-color: transparent;
             border: none;
-        }
-        .input-container textarea {
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            resize: vertical;
-        }
-        .input-container button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: $primary-color;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .input-container button:hover {
-            background-color: darken($primary-color, 10%);
-        }
-        .latest-posts {
-            margin-top: 20px;
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
-        }
-        .latestPost {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 5px;
-        }
-        .post-container {
-            position: relative;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #000;
-            color: #fff;
+            color: #39FF14;
         }
         .post-content {
             margin: 0;
+        }
+        .reply-form-container {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #252525;
+            border-radius: 5px;
+            color: #fff;
+            width: calc(100% - 40px);
+            margin-left: auto;
+        }
+        .reply-form-container h3 {
+            margin-top: 0;
         }
     </style>
 </head>
@@ -117,7 +127,6 @@
         <div class="input-container">
         <form action="javascript:createPost()" id="postButton">
             <h2>Post Your Message</h2>
-            <input type="text" id="uid" placeholder="Enter UID...">
             <textarea id="message" placeholder="Type your post..."></textarea>
             <button id="postButton">Post</button>
         </form>
@@ -129,14 +138,21 @@
         </div>
     </div>
     <div id="latestPosts" class="latest-posts"></div>
-   <script>
+<script>
+    if (location.hostname === "localhost") {
+        uri = "http://localhost:8086/";
+} else if (location.hostname === "127.0.0.1") {
+        uri = "http://127.0.0.1:8086/";
+} else if (location.hostname === "0.0.0.0") {
+        uri = "http://0.0.0.0:4100/"
+} else {
+        uri = "http://localhost:8086/";
+}
     function createPost() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        const uid = document.getElementById("uid").value;
         const message = document.getElementById("message").value;
         const body = {
-            uid: uid,
             message: message,
             likes: 0
         };
@@ -147,7 +163,7 @@
             body: JSON.stringify(body),
             credentials: 'include'
         };
-        fetch('http://127.0.0.1:8086/api/messages/send', authOptions)
+        fetch(uri+'/api/messages/send', authOptions)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to create post:', response.status);
@@ -163,7 +179,7 @@
             .then(data => {
                 if (data !== null) {
                     console.log('Response:', data);
-                    updatePostsContainer(uid, message, 0);
+                    updatePostsContainer(data['uid'], message, 0);
                 }
             })
             .catch(error => {
@@ -179,7 +195,7 @@
             headers: myHeaders,
             credentials: 'include'
         };
-        fetch('http://127.0.0.1:8086/api/messages/', authOptions)
+        fetch(uri+'/api/messages/', authOptions)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to fetch posts:', response.status);
@@ -190,7 +206,7 @@
             .then(posts => {
                 if (posts === null || posts === undefined) {
                     console.warn('Received null or undefined posts.');
-                    alert('Please Log in first!')
+                    alert('Please Log in first!');
                     return;
                 }
                 console.log('Fetched Posts:', posts);
@@ -207,34 +223,39 @@
             updatePostsContainer(post.uid, post.message, post.likes);
         });
     }
+    // boilerplate code created by chatGPT, then edited to fit needs
     function updatePostsContainer(uid, message, likes) {
-    const postsContainer = document.getElementById('posts');
-    const postDiv = document.createElement('div');
-    postDiv.className = 'post-container';
-    const postContent = document.createElement('p');
-    postContent.className = 'post-content';
-    postContent.textContent = `UID: ${uid}, Message: ${message}`;
-    const replyButton = document.createElement('button');
-    replyButton.textContent = 'Reply';
-    replyButton.addEventListener('click', () => showReplyForm(uid));
-    const likeButton = document.createElement('button');
-    likeButton.textContent = 'Like';
-    likeButton.addEventListener('click', () => {
-        likePost(uid, message);
-        likeButton.style.display = 'none';
-    });
-    const likesCountSpan = document.createElement('span');
-    likesCountSpan.className = 'likes-count';
-    likesCountSpan.textContent = `${likes} 👍`;
-    postDiv.appendChild(postContent);
-    postDiv.appendChild(replyButton);
-    postDiv.appendChild(likeButton);
-    postDiv.appendChild(likesCountSpan);
-    postsContainer.appendChild(postDiv);
-}
+        const postsContainer = document.getElementById('posts');
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post-container';
+        postDiv.dataset.uid = uid;
+        const postContent = document.createElement('p');
+        postContent.className = 'post-content';
+        postContent.textContent = `UID: ${uid}, Message: ${message}`;
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', () => showEditForm(uid, message));
+        const likeButton = document.createElement('button');
+        likeButton.textContent = 'Like';
+        likeButton.addEventListener('click', () => {
+            likePost(uid, message);
+            likeButton.style.display = 'none';
+        });
+        const likeCountContainer = document.createElement('div');
+        likeCountContainer.className = 'like-count-container';
+        const likesCountSpan = document.createElement('span');
+        likesCountSpan.className = 'likes-count';
+        likesCountSpan.textContent = `${likes} 👍`;
+        likeCountContainer.appendChild(likesCountSpan);
+        postDiv.appendChild(postContent);
+        postDiv.appendChild(editButton);
+        postDiv.appendChild(likeButton);
+        postDiv.appendChild(likeCountContainer);
+        postsContainer.appendChild(postDiv);
+    }
     function showReplyForm(parentUID) {
         const replyFormContainer = document.getElementById('replyFormContainer');
-        replyFormContainer.innerHTML = '';
+        replyFormContainer.innerHTML = ''; // Clear existing content
         const replyForm = document.createElement('form');
         replyForm.className = 'reply-form-container';
         replyForm.innerHTML = `
@@ -260,7 +281,7 @@
             body: JSON.stringify(body),
             credentials: 'include'
         };
-        fetch('http://127.0.0.1:8086/api/messages/send', authOptions)
+        fetch(uri+'/api/messages/send', authOptions)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to create reply:', response.status);
@@ -286,8 +307,9 @@
     }
     function likePost(uid, message) {
         const likesCountSpan = document.querySelector(`.post-container[data-uid="${uid}"] .likes-count`);
+        var currentLikes = 0;
         if (likesCountSpan) {
-            var currentLikes = parseInt(likesCountSpan.textContent, 10) || 0;
+            currentLikes = parseInt(likesCountSpan.textContent, 10) || 0;
             likesCountSpan.textContent = `${currentLikes + 1} 👍`;
         }
         var myHeaders = new Headers();
@@ -302,7 +324,7 @@
             body: JSON.stringify(body),
             credentials: 'include'
         };
-        fetch(`http://127.0.0.1:8086/api/messages/like`, authOptions)
+        fetch(uri+`/api/messages/like`, authOptions)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to like post:', response.status);
@@ -321,6 +343,9 @@
             .then(data => {
                 if (data !== null) {
                     console.log('Like Response:', data);
+                    if (likesCountSpan) {
+                        likesCountSpan.textContent = `${currentLikes + 1} 👍`;
+                    }
                 }
             })
             .catch(error => {
@@ -340,7 +365,61 @@
             }
         });
     }
+    function showEditForm(uid, message) {
+        const editFormContainer = document.getElementById('editFormContainer');
+        editFormContainer.innerHTML = ''; // Clear existing content
+        const editForm = document.createElement('form');
+        editForm.className = 'edit-form-container';
+        editForm.innerHTML = `
+            <h3>Edit Message with UID: ${uid}</h3>
+            <textarea id="editMessage" placeholder="Edit your message...">${message}</textarea>
+            <button type="button" onclick="editPost('${uid}')">Save Changes</button>
+        `;
+        editFormContainer.appendChild(editForm);
+    }
+    function editPost(uid) {
+        const editedMessage = document.getElementById('editMessage').value;
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const body = {
+            message: editedMessage,
+        };
+        console.log(body);
+        const authOptions = {
+            method: 'DELETE',
+            cache: 'no-cache',
+            headers: myHeaders,
+            body: JSON.stringify(body),
+            credentials: 'include'
+        };
+        fetch(uri+'/api/messages/delete', authOptions)
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Failed to edit post:', response.status);
+                    return null;
+                }
+                const contentType = response.headers.get('Content-Type');
+                if (contentType && contentType.includes('application/json')) {
+                    return response.json();
+                } else {
+                    return response.text();
+                }
+            })
+            .then(data => {
+                if (data !== null) {
+                    console.log('Edit Response:', data);
+                    const editFormContainer = document.getElementById('editFormContainer');
+                    editFormContainer.innerHTML = '';
+                    fetchPosts();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 </script>
 
 
 <div id="replyFormContainer"></div>
+
+<div id="editFormContainer"></div>
