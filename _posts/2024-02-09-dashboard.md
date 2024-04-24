@@ -9,17 +9,20 @@
             0%, 100%{
                 border-color: #FF0000;
             }
-            20% {
-                border-color: #FF7F00;
-            }
-            40% {
+            16% {
                 border-color: #FFFF00;
             }
-            60% {
+            33% {
                 border-color: #00FF00;
             }
+            49% {
+                border-color: #00FFFF
+            }
+            66% {
+                border-color: #0000FF;
+            }
             80% {
-                border-color: #002CFF;
+                border-color: #FF00FF;
             }
         }
         body {
