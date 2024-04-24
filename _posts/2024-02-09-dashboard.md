@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Media Chat</title>
-    <style> /* partially created by chatGPT */
+    <style> /* styling code created by chatGPT */
         @keyframes strobe {
             0%, 100%{
                 border-color: #FF0000;
@@ -138,7 +138,8 @@
         </div>
     </div>
     <div id="latestPosts" class="latest-posts"></div>
-<script>
+<script> 
+/* this code was mainly created by me and then debugged using chatGPT */
     if (location.hostname === "localhost") {
         uri = "http://localhost:8086/";
 } else if (location.hostname === "127.0.0.1") {

@@ -4,7 +4,7 @@ title: Course Outlines
 image: /images/mario_animation.png
 hide: true
 ---
-
+<!--CODE CREATED BY CHATGPT-->
 {% include nav_home.html %}
 
 {% assign sprite_file = site.baseurl | append: page.image %}  <!--- Liquid concatentation --->

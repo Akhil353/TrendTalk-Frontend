@@ -1,3 +1,4 @@
+# TEMPLATE CODE PROVIDED BY TEACHER
 # Configuration, override port with usage: make PORT=4200
 PORT ?= 4100
 REPO_NAME ?= teacher_portfolio
