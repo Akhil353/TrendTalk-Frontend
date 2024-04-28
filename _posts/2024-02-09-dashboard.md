@@ -29,7 +29,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #171515;
-            color: #39FF14;
+            color: #39ff14;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -40,7 +40,7 @@
             border: 5px solid transparent;
             background-clip: padding-box;
             background-color: #171515;
-            color: #39FF14;
+            color: #39dd14;
             animation: strobe 2s infinite;
             max-width: 1000px;
             width: 100%;
@@ -71,7 +71,7 @@
             box-sizing: border-box;
         }
         button:hover {
-            background-color: #2d9e00;
+            background-color: #2d6e00;
         }
         .posts-container {
             max-width: 800px;
@@ -110,19 +110,6 @@
         .post-content {
             margin: 0;
         }
-        .reply-form-container {
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #252525;
-            border-radius: 5px;
-            color: #fff;
-            width: calc(100% - 40px);
-            margin-left: auto;
-        }
-        .reply-form-container h3 {
-            margin-top: 0;
-        }
     </style>
 </head>
 <body onload="fetchPosts();">
@@ -136,7 +123,7 @@
         </div>
         <div class="posts-container" id="postsWrapper">
             <h2>Posts</h2>
-            <input type="text" id="searchInput" oninput="searchPosts()" placeholder="Search posts...">
+            <input type="text" id="searchInput" oninput="search_posts()" placeholder="Search posts...">
             <div id="posts"></div>
         </div>
     </div>
@@ -153,28 +140,28 @@
         uri = "http://localhost:8086/";
 }
     function createPost() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
         const message = document.getElementById("message").value;
         const body = {
             message: message,
             likes: 0
         };
-        const authOptions = {
+        const fetch_options = {
             method: 'POST',
             cache: 'no-cache',
-            headers: myHeaders,
+            headers: headers,
             body: JSON.stringify(body),
             credentials: 'include'
         };
-        fetch(uri+'/api/messages/send', authOptions)
+        fetch(uri+'/api/messages/send', fetch_options)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to create post:', response.status);
                     return null;
                 }
-                const contentType = response.headers.get('Content-Type');
-                if (contentType && contentType.includes('application/json')) {
+                const content = response.headers.get('Content-Type');
+                if (content && content.includes('application/json')) {
                     return response.json();
                 } else {
                     return response.text();
@@ -183,7 +170,7 @@
             .then(data => {
                 if (data !== null) {
                     console.log('Response:', data);
-                    updatePostsContainer(data['uid'], message, 0);
+                    update_posts_container(data['uid'], message, 0);
                 }
             })
             .catch(error => {
@@ -191,15 +178,15 @@
             });
     }
     function fetchPosts() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        const authOptions = {
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        const fetch_options = {
             method: 'GET',
             cache: 'no-cache',
-            headers: myHeaders,
+            headers: headers,
             credentials: 'include'
         };
-        fetch(uri+'/api/messages/', authOptions)
+        fetch(uri+'/api/messages/', fetch_options)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to fetch posts:', response.status);
@@ -214,131 +201,78 @@
                     return;
                 }
                 console.log('Fetched Posts:', posts);
-                displayPosts(posts);
+                display_posts(posts);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
     }
-    function displayPosts(posts) {
-        const postsContainer = document.getElementById('posts');
-        postsContainer.innerHTML = '';
+    function display_posts(posts) {
+        const posts_container = document.getElementById('posts');
+        posts_container.innerHTML = '';
         posts.forEach(post => {
-            updatePostsContainer(post.uid, post.message, post.likes);
+            update_posts_container(post.uid, post.message, post.likes);
         });
     }
     // boilerplate code created by chatGPT, then edited to fit needs
-    function updatePostsContainer(uid, message, likes) {
-        const postsContainer = document.getElementById('posts');
-        const postDiv = document.createElement('div');
-        postDiv.className = 'post-container';
-        postDiv.dataset.uid = uid;
-        const postContent = document.createElement('p');
-        postContent.className = 'post-content';
-        postContent.textContent = `UID: ${uid}, Message: ${message}`;
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.addEventListener('click', () => showEditForm(uid, message));
-        const likeButton = document.createElement('button');
-        likeButton.textContent = 'Like';
-        likeButton.addEventListener('click', () => {
+    function update_posts_container(uid, message, likes) {
+        const posts_container = document.getElementById('posts');
+        const post_div = document.createElement('div');
+        post_div.className = 'post-container';
+        post_div.dataset.uid = uid;
+        const post_content = document.createElement('p');
+        post_content.className = 'post-content';
+        post_content.textContent = `UID: ${uid}, Message: ${message}`;
+        const edit_button = document.createElement('button');
+        edit_button.textContent = 'Edit';
+        const like_button = document.createElement('button');
+        like_button.textContent = 'Like';
+        like_button.addEventListener('click', () => {
             likePost(uid, message);
-            likeButton.style.display = 'none';
+            like_button.style.display = 'none';
         });
-        const likeCountContainer = document.createElement('div');
-        likeCountContainer.className = 'like-count-container';
-        const likesCountSpan = document.createElement('span');
-        likesCountSpan.className = 'likes-count';
-        likesCountSpan.textContent = `${likes} 👍`;
-        likeCountContainer.appendChild(likesCountSpan);
-        postDiv.appendChild(postContent);
-        postDiv.appendChild(editButton);
-        postDiv.appendChild(likeButton);
-        postDiv.appendChild(likeCountContainer);
-        postsContainer.appendChild(postDiv);
-    }
-    function showReplyForm(parentUID) {
-        const replyFormContainer = document.getElementById('replyFormContainer');
-        replyFormContainer.innerHTML = ''; // Clear existing content
-        const replyForm = document.createElement('form');
-        replyForm.className = 'reply-form-container';
-        replyForm.innerHTML = `
-            <h3>Reply to UID: ${parentUID}</h3>
-            <textarea id="replyMessage" placeholder="Type your reply..."></textarea>
-            <button type="button" onclick="postReply('${parentUID}')">Post Reply</button>
-        `;
-        replyFormContainer.appendChild(replyForm);
-    }
-    function postReply(parentUID) {
-        const replyMessage = document.getElementById('replyMessage').value;
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        const body = {
-            uid: parentUID,
-            message: replyMessage,
-            likes: 0
-        };
-        const authOptions = {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: myHeaders,
-            body: JSON.stringify(body),
-            credentials: 'include'
-        };
-        fetch(uri+'/api/messages/send', authOptions)
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Failed to create reply:', response.status);
-                    return null;
-                }
-                const contentType = response.headers.get('Content-Type');
-                if (contentType && contentType.includes('application/json')) {
-                    return response.json();
-                } else {
-                    return response.text();
-                }
-            })
-            .then(data => {
-                if (data !== null) {
-                    console.log('Reply Response:', data);
-                    const replyFormContainer = document.getElementById('replyFormContainer');
-                    replyFormContainer.innerHTML = '';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        const like_count_container = document.createElement('div');
+        like_count_container.className = 'like-count-container';
+        const likes_count_span = document.createElement('span');
+        likes_count_span.className = 'likes-count';
+        likes_count_span.textContent = `${likes} 👍`;
+        like_count_container.appendChild(likes_count_span);
+        post_div.appendChild(post_content);
+        post_div.appendChild(edit_button);
+        post_div.appendChild(like_button);
+        post_div.appendChild(like_count_container);
+        posts_container.appendChild(post_div);
     }
     function likePost(uid, message) {
-        const likesCountSpan = document.querySelector(`.post-container[data-uid="${uid}"] .likes-count`);
+        const likes_count_span = document.querySelector(`.post-container[data-uid="${uid}"] .likes-count`);
         var currentLikes = 0;
-        if (likesCountSpan) {
-            currentLikes = parseInt(likesCountSpan.textContent, 10) || 0;
-            likesCountSpan.textContent = `${currentLikes + 1} 👍`;
+        if (likes_count_span) {
+            currentLikes = parseInt(likes_count_span.textContent, 10) || 0;
+            likes_count_span.textContent = `${currentLikes + 1} 👍`;
         }
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
         const body = {
             message: message,
         };
-        const authOptions = {
+        const fetch_options = {
             method: 'PUT',
             cache: 'no-cache',
-            headers: myHeaders,
+            headers: headers,
             body: JSON.stringify(body),
             credentials: 'include'
         };
-        fetch(uri+`/api/messages/like`, authOptions)
+        fetch(uri+`/api/messages/like`, fetch_options)
             .then(response => {
                 if (!response.ok) {
                     console.error('Failed to like post:', response.status);
-                    if (likesCountSpan) {
-                        likesCountSpan.textContent = `${currentLikes} 👍`;
+                    if (likes_count_span) {
+                        likes_count_span.textContent = `${currentLikes} 👍`;
                     }
                     return null;
                 }
-                const contentType = response.headers.get('Content-Type');
-                if (contentType && contentType.includes('application/json')) {
+                const content = response.headers.get('Content-Type');
+                if (content && content.includes('application/json')) {
                     return response.json();
                 } else {
                     return response.text();
@@ -347,8 +281,8 @@
             .then(data => {
                 if (data !== null) {
                     console.log('Like Response:', data);
-                    if (likesCountSpan) {
-                        likesCountSpan.textContent = `${currentLikes + 1} 👍`;
+                    if (likes_count_span) {
+                        likes_count_span.textContent = `${currentLikes + 1} 👍`;
                     }
                 }
             })
@@ -356,74 +290,20 @@
                 console.error('Error:', error);
             });
     }
-    function searchPosts() {
+    function search_posts() {
         const searchInput = document.getElementById('searchInput').value.toLowerCase();
-        const postsContainer = document.getElementById('posts');
-        const allPosts = postsContainer.querySelectorAll('.post-container');
+        const posts_container = document.getElementById('posts');
+        const allPosts = posts_container.querySelectorAll('.post-container');
         allPosts.forEach(post => {
-            const postContent = post.querySelector('.post-content').textContent.toLowerCase();
-            if (postContent.includes(searchInput)) {
+            const post_content = post.querySelector('.post-content').textContent.toLowerCase();
+            if (post_content.includes(searchInput)) {
                 post.style.display = 'block';
             } else {
                 post.style.display = 'none';
             }
         });
     }
-    function showEditForm(uid, message) {
-        const editFormContainer = document.getElementById('editFormContainer');
-        editFormContainer.innerHTML = ''; // Clear existing content
-        const editForm = document.createElement('form');
-        editForm.className = 'edit-form-container';
-        editForm.innerHTML = `
-            <h3>Edit Message with UID: ${uid}</h3>
-            <textarea id="editMessage" placeholder="Edit your message...">${message}</textarea>
-            <button type="button" onclick="editPost('${uid}')">Save Changes</button>
-        `;
-        editFormContainer.appendChild(editForm);
-    }
-    function editPost(uid) {
-        const editedMessage = document.getElementById('editMessage').value;
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        const body = {
-            message: editedMessage,
-        };
-        console.log(body);
-        const authOptions = {
-            method: 'DELETE',
-            cache: 'no-cache',
-            headers: myHeaders,
-            body: JSON.stringify(body),
-            credentials: 'include'
-        };
-        fetch(uri+'/api/messages/delete', authOptions)
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Failed to edit post:', response.status);
-                    return null;
-                }
-                const contentType = response.headers.get('Content-Type');
-                if (contentType && contentType.includes('application/json')) {
-                    return response.json();
-                } else {
-                    return response.text();
-                }
-            })
-            .then(data => {
-                if (data !== null) {
-                    console.log('Edit Response:', data);
-                    const editFormContainer = document.getElementById('editFormContainer');
-                    editFormContainer.innerHTML = '';
-                    fetchPosts();
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
 </script>
 
-
-<div id="replyFormContainer"></div>
 
 <div id="editFormContainer"></div>
