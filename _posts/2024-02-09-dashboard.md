@@ -222,7 +222,7 @@
         post_div.dataset.uid = uid;
         const post_content = document.createElement('p');
         post_content.className = 'post-content';
-        post_content.textContent = `UID: ${uid}, Message: ${message}`;
+        post_content.textContent = `${uid}: ${message}`;
         const edit_button = document.createElement('button');
         edit_button.textContent = 'Edit';
         const like_button = document.createElement('button');
