@@ -1,9 +1,4 @@
-<html lang="en">
 <head>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Chat</title>
     <style> /* styling code created by chatGPT */
         @keyframes strobe {
             0%, 100%{
@@ -112,10 +107,10 @@
         }
     </style>
 </head>
-<body onload="fetchPosts();">
+<body onload="fetch_posts();">
     <div class="container">
         <div class="input-container">
-        <form action="javascript:createPost()" id="postButton">
+        <form action="javascript:create_post()" id="postButton">
             <h2>Post Your Message</h2>
             <textarea id="message" placeholder="Type your post..."></textarea>
             <button id="postButton">Post</button>
@@ -129,17 +124,17 @@
     </div>
     <div id="latestPosts" class="latest-posts"></div>
 <script> 
-/* this code was mainly created by me and then debugged using chatGPT */
+/* this code was mainly created by me and and then debugged using chatGPT */
     if (location.hostname === "localhost") {
         uri = "http://localhost:8086/";
-} else if (location.hostname === "127.0.0.1") {
+    } else if (location.hostname === "127.0.0.1") {
         uri = "http://127.0.0.1:8086/";
-} else if (location.hostname === "0.0.0.0") {
+    } else if (location.hostname === "0.0.0.0") {
         uri = "http://0.0.0.0:4100/"
-} else {
+    } else {
         uri = "http://localhost:8086/";
-}
-    function createPost() {
+    }
+    function create_post() {
         var headers = new Headers();
         headers.append("Content-Type", "application/json");
         const message = document.getElementById("message").value;
@@ -177,9 +172,7 @@
                 console.error('Error:', error);
             });
     }
-    function fetchPosts() {
-        var headers = new Headers();
-        headers.append("Content-Type", "application/json");
+    function fetch_posts() {
         const fetch_options = {
             method: 'GET',
             cache: 'no-cache',
@@ -228,7 +221,7 @@
         const like_button = document.createElement('button');
         like_button.textContent = 'Like';
         like_button.addEventListener('click', () => {
-            likePost(uid, message);
+            like_post(uid, message);
             like_button.style.display = 'none';
         });
         const like_count_container = document.createElement('div');
@@ -243,15 +236,13 @@
         post_div.appendChild(like_count_container);
         posts_container.appendChild(post_div);
     }
-    function likePost(uid, message) {
+    function like_post(uid, message) {
         const likes_count_span = document.querySelector(`.post-container[data-uid="${uid}"] .likes-count`);
         var currentLikes = 0;
         if (likes_count_span) {
             currentLikes = parseInt(likes_count_span.textContent, 10) || 0;
             likes_count_span.textContent = `${currentLikes + 1} 👍`;
         }
-        var headers = new Headers();
-        headers.append("Content-Type", "application/json");
         const body = {
             message: message,
         };
