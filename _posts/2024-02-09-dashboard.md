@@ -107,6 +107,7 @@
         }
     </style>
 </head>
+<!---Debugged via GPT--->
 <body onload="fetch_posts();">
     <div class="container">
         <div class="input-container">
@@ -124,7 +125,7 @@
     </div>
     <div id="latestPosts" class="latest-posts"></div>
 <script> 
-/* this code was mainly created by me and and then debugged using chatGPT */
+/* this code was mainly created by me and then debugged using chatGPT */
     if (location.hostname === "localhost") {
         uri = "http://localhost:8086/";
     } else if (location.hostname === "127.0.0.1") {
