@@ -141,6 +141,7 @@
         var headers = new Headers();
         headers.append("Content-Type", "application/json");
         const message = document.getElementById("message").value;
+        /* send the message and the likes to be created in the DB*/
         const body = {
             message: message,
             likes: 0
@@ -196,6 +197,7 @@
                 return response.json();
             })
             .then(posts => {
+                /* error encountered */
                 if (posts === null || posts === undefined) {
                     console.warn('Received null or undefined posts.');
                     alert('Please Log in first!');
@@ -219,6 +221,7 @@
     // boilerplate code created by chatGPT, then edited to fit needs
     /* add a new box for the new message */
     function update_posts_container(uid, message, likes) {
+        /* add buttons to the message for functions to be run */
         const posts_container = document.getElementById('posts');
         const post_div = document.createElement('div');
         post_div.className = 'post-container';
@@ -254,6 +257,7 @@
             currentLikes = parseInt(likes_count_span.textContent, 10) || 0;
             likes_count_span.textContent = `${currentLikes + 1} 👍`;
         }
+        /* data sent to backend */
         const body = {
             message: message,
         };
@@ -291,6 +295,7 @@
                 }
             })
             .catch(error => {
+                /* log error for debugging purposes*/
                 console.error('Error:', error);
             });
     }
@@ -299,6 +304,7 @@
         const searchInput = document.getElementById('searchInput').value.toLowerCase();
         const posts_container = document.getElementById('posts');
         const allPosts = posts_container.querySelectorAll('.post-container');
+        /* go through each post until the correct message is found*/
         allPosts.forEach(post => {
             const post_content = post.querySelector('.post-content').textContent.toLowerCase();
             if (post_content.includes(searchInput)) {
