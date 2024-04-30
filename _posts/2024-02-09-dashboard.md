@@ -108,7 +108,7 @@
     </style>
 </head>
 <!---Debugged via GPT--->
-<body onload="fetch_posts();">
+<body onload="fetch_posts();"> <!---Input area for user, function run after user clicks button--->
     <div class="container">
         <div class="input-container">
         <form action="javascript:create_post()" id="postButton">
@@ -126,6 +126,7 @@
     <div id="latestPosts" class="latest-posts"></div>
 <script> 
 /* this code was mainly created by me and then debugged using chatGPT */
+/* get the location of website for backend access */
     if (location.hostname === "localhost") {
         uri = "http://localhost:8086/";
     } else if (location.hostname === "127.0.0.1") {
@@ -135,6 +136,7 @@
     } else {
         uri = "http://localhost:8086/";
     }
+    /* add new message to messages */
     function create_post() {
         var headers = new Headers();
         headers.append("Content-Type", "application/json");
@@ -143,6 +145,7 @@
             message: message,
             likes: 0
         };
+        /* fetch type */
         const fetch_options = {
             method: 'POST',
             cache: 'no-cache',
@@ -150,6 +153,7 @@
             body: JSON.stringify(body),
             credentials: 'include'
         };
+        /* fetch function to send request to backend */
         fetch(uri+'/api/messages/send', fetch_options)
             .then(response => {
                 if (!response.ok) {
@@ -163,6 +167,7 @@
                     return response.text();
                 }
             })
+            /* update posts when data recieved*/
             .then(data => {
                 if (data !== null) {
                     console.log('Response:', data);
@@ -173,6 +178,7 @@
                 console.error('Error:', error);
             });
     }
+    /* get all existing posts from backend*/
     function fetch_posts() {
         const fetch_options = {
             method: 'GET',
@@ -180,6 +186,7 @@
             headers: headers,
             credentials: 'include'
         };
+        /* fetch all current messages */
         fetch(uri+'/api/messages/', fetch_options)
             .then(response => {
                 if (!response.ok) {
@@ -201,6 +208,7 @@
                 console.error('Error:', error);
             });
     }
+    /* display posts using the given data fron fetch*/
     function display_posts(posts) {
         const posts_container = document.getElementById('posts');
         posts_container.innerHTML = '';
@@ -209,6 +217,7 @@
         });
     }
     // boilerplate code created by chatGPT, then edited to fit needs
+    /* add a new box for the new message */
     function update_posts_container(uid, message, likes) {
         const posts_container = document.getElementById('posts');
         const post_div = document.createElement('div');
@@ -237,6 +246,7 @@
         post_div.appendChild(like_count_container);
         posts_container.appendChild(post_div);
     }
+    /* update database to add a new like to each message*/
     function like_post(uid, message) {
         const likes_count_span = document.querySelector(`.post-container[data-uid="${uid}"] .likes-count`);
         var currentLikes = 0;
@@ -254,6 +264,7 @@
             body: JSON.stringify(body),
             credentials: 'include'
         };
+        /* send like request to backend */
         fetch(uri+`/api/messages/like`, fetch_options)
             .then(response => {
                 if (!response.ok) {
@@ -270,6 +281,7 @@
                     return response.text();
                 }
             })
+            /* add to the frontend counter to keep like counter same with backend */
             .then(data => {
                 if (data !== null) {
                     console.log('Like Response:', data);
@@ -282,6 +294,7 @@
                 console.error('Error:', error);
             });
     }
+    /* index for posts using inputted text */
     function search_posts() {
         const searchInput = document.getElementById('searchInput').value.toLowerCase();
         const posts_container = document.getElementById('posts');
